@@ -1,8 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 
-const dbURI =
-  "mongodb+srv://sophie:<password>@movieinventorycluster.ssajbsf.mongodb.net/?retryWrites=true&w=majority";
+const dbURI = process.env.CONNECTION_STR;
 
 // connect to database
 const connectDB = async () => {
