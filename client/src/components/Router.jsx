@@ -6,7 +6,8 @@ import Categories from "../pages/Categories";
 import MovieDetails from "../pages/MovieDetails";
 import CategoryDetails from "../pages/CategoryDetails";
 import MovieForm from "../pages/MovieForm";
-import CategoryForm from '../pages/CategoryForm'
+import CategoryForm from "../pages/CategoryForm";
+import Error from "../components/Error";
 
 function Router() {
   const router = createBrowserRouter([
@@ -31,6 +32,10 @@ function Router() {
           element: <MovieForm />,
         },
         {
+          path: "/edit-movie/:id",
+          element: <MovieForm />,
+        },
+        {
           path: "/categories",
           element: <Categories />,
         },
@@ -43,6 +48,7 @@ function Router() {
           element: <CategoryForm />,
         },
       ],
+      errorElement: <Error />,
     },
   ]);
 

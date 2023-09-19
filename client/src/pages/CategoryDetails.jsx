@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 function CategoryDetails() {
   const { id } = useParams();
   const [moviesData, setMoviesData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchMovies() {
@@ -31,10 +32,32 @@ function CategoryDetails() {
     fetchMovies();
   }, [id]);
 
-  if (error) return <p>Error: {error.message}</p>;
+  async function deleteCategory() {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `http://localhost:8080/api/categories/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
-  console.log(moviesData);
+      if (!response.ok) {
+        const errorMsg = await response.json();
+        throw new Error(errorMsg.message);
+      }
 
+      navigate("/categories");
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (error) return <p className='text-xl text-yellow-400'>{`Error: ${error}`}</p>
+  
   return (
     <div>
       {loading ? (
@@ -54,6 +77,12 @@ function CategoryDetails() {
               ))}
             </ul>
           )}
+          <button
+            onClick={() => deleteCategory()}
+            className="bg-yellow-400 text-black w-32"
+          >
+            Delete category
+          </button>
         </div>
       )}
     </div>

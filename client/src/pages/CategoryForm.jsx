@@ -1,17 +1,17 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CategoryForm() {
   const [newCategory, setNewCategory] = useState({ name: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  console.log(newCategory);
+  const navigate = useNavigate();
 
   // add new category
   async function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true);
     try {
+      setLoading(true);
       const response = await fetch("http://localhost:8080/api/categories", {
         method: "POST",
         headers: {
@@ -23,7 +23,7 @@ function CategoryForm() {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
       }
-
+      navigate("/categories");
       setNewCategory("");
       setError(null);
     } catch (error) {
@@ -34,7 +34,8 @@ function CategoryForm() {
     }
   }
 
-  if (error) return <p>Error: {error.message}</p>;
+  if (error)
+    return <p className="text-xl text-yellow-400">{`Error: ${error}`}</p>;
 
   return (
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">

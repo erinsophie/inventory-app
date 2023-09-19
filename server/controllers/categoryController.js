@@ -7,7 +7,7 @@ exports.getCategories = async (req, res) => {
     const categories = await Category.find().sort({ name: 1 }).exec();
     res.json(categories);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -20,7 +20,7 @@ exports.readCategory = async (req, res) => {
     ]);
 
     if (!category) {
-      return res.status(404).json({ error: "Category not found" });
+      return res.status(404).json({ message: "Category not found" });
     }
 
     res.json({
@@ -28,7 +28,7 @@ exports.readCategory = async (req, res) => {
       category: category.name,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -40,4 +40,30 @@ exports.addCategory = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}
+};
+
+exports.deleteCategory = async (req, res) => {
+  try {
+    const category = await Category.findById(req.params.id).exec();
+
+    if (!category) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+
+    const moviesInCategory = await Movie.find({
+      category: req.params.id,
+    }).exec();
+
+    // if there is no movies in this category, delete category
+    if (moviesInCategory.length === 0) {
+      await Category.findByIdAndRemove(req.params.id);
+      return res.status(200).json({ message: "Category has been deleted" });
+    } else {
+      return res
+        .status(400)
+        .json({ message: "Category still has movies. Cannot delete" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};

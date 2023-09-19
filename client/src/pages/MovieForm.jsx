@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function MovieForm() {
+  const { id } = useParams();
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const [newMovie, setNewMovie] = useState({
     name: "",
     price: "",
     category: "",
     numberInStock: "",
   });
-
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   function resetForm() {
     setNewMovie({
@@ -23,10 +23,8 @@ function MovieForm() {
     });
   }
 
-  console.log(newMovie);
-
+  // fetch all categories
   useEffect(() => {
-    // fetch all categories
     async function getCategories() {
       try {
         let response = await fetch("http://localhost:8080/api/categories");
@@ -36,6 +34,7 @@ function MovieForm() {
         }
         let data = await response.json();
         setCategories(data);
+        // populate category with default category to avoid errors
         setNewMovie((prevMovie) => ({
           ...prevMovie,
           category: data[0]._id,
@@ -53,14 +52,44 @@ function MovieForm() {
     getCategories();
   }, []);
 
-  if (error) return <p>Error: {error.message}</p>;
+  // load movie details if id is provided
+  useEffect(() => {
+    async function fetchMovie() {
+      if (id) {
+        try {
+          const response = await fetch(
+            `http://localhost:8080/api/movies/${id}`
+          );
+
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          setNewMovie(data);
+          setError(null);
+        } catch (error) {
+          setError(error.message);
+          setNewMovie(null);
+        } finally {
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchMovie();
+  }, [id]);
 
   // add new movie
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/api/movies", {
-        method: "POST",
+      const url = id
+        ? `http://localhost:8080/api/movies/${id}`
+        : "http://localhost:8080/api/movies";
+      const method = id ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -80,6 +109,9 @@ function MovieForm() {
       setLoading(false);
     }
   }
+
+  if (error)
+    return <p className="text-xl text-yellow-400">{`Error: ${error}`}</p>;
 
   return (
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">
@@ -150,7 +182,7 @@ function MovieForm() {
           />
 
           <button type="submit" className="p-2 bg-yellow-400 text-black w-32">
-            Add movie
+            {id ? "Update movie" : "Add movie"}
           </button>
         </form>
       )}

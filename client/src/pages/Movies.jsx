@@ -29,7 +29,8 @@ function Movies() {
     getMovies();
   }, []);
 
-  if (error) return <p>Error: {error.message}</p>;
+  if (error)
+    return <p className="text-xl text-yellow-400">{`Error: ${error}`}</p>;
 
   return (
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">

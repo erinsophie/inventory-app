@@ -7,7 +7,7 @@ function MovieDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
- 
+
   // fetch all movies upon component mount
   useEffect(() => {
     async function fetchMovie() {
@@ -31,8 +31,6 @@ function MovieDetails() {
     fetchMovie();
   }, [id]);
 
-  if (error) return <p>Error: {error.message}</p>;
-
   // delete movie
   async function handleDelete() {
     try {
@@ -53,6 +51,9 @@ function MovieDetails() {
     }
   }
 
+  if (error)
+    return <p className="text-xl text-yellow-400">{`Error: ${error}`}</p>;
+
   return (
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col">
       {loading ? (
@@ -64,12 +65,20 @@ function MovieDetails() {
           <p>Catgeory: {movie.category.name}</p>
           <p>Number in stock: {movie.numberInStock}</p>
 
-          <button
-            onClick={() => handleDelete()}
-            className="bg-yellow-400 text-black w-32"
-          >
-            Delete movie
-          </button>
+          <div className="flex gap-5">
+            <button
+              onClick={() => handleDelete()}
+              className="bg-yellow-400 text-black w-32"
+            >
+              Delete movie
+            </button>
+            <button
+              onClick={() => navigate(`/edit-movie/${id}`)}
+              className="bg-yellow-400 text-black w-32"
+            >
+              Update movie
+            </button>
+          </div>
         </div>
       )}
     </div>
