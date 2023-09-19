@@ -18,3 +18,13 @@ exports.readMovie = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.addMovie = async (req, res) => {
+  try {
+    const movie = new Movie(req.body);
+    await movie.save();
+    res.status(201).json(movie)
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};

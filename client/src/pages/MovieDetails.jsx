@@ -20,7 +20,7 @@ function MovieDetails() {
         setError(null);
       } catch (error) {
         setError(error.message);
-        setMovie([]);
+        setMovie(null);
       } finally {
         setLoading(false);
       }
