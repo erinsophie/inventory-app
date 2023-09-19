@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function MovieForm() {
   const [newMovie, setNewMovie] = useState({
@@ -11,6 +12,7 @@ function MovieForm() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   function resetForm() {
     setNewMovie({
@@ -21,7 +23,7 @@ function MovieForm() {
     });
   }
 
-  console.log(newMovie)
+  console.log(newMovie);
 
   useEffect(() => {
     // fetch all categories
@@ -36,9 +38,9 @@ function MovieForm() {
         setCategories(data);
         setNewMovie((prevMovie) => ({
           ...prevMovie,
-          category: data[0]._id, 
+          category: data[0]._id,
         }));
-  
+
         setError(null);
       } catch (error) {
         setError(error.message);
@@ -68,7 +70,7 @@ function MovieForm() {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
       }
-
+      navigate("/movies");
       resetForm();
       setError(null);
     } catch (error) {

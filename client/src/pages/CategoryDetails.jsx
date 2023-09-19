@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 function CategoryDetails() {
   const { id } = useParams();
@@ -43,13 +43,17 @@ function CategoryDetails() {
         <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">
           <h1>All {moviesData.category} movies</h1>
           <p>A-Z</p>
-          <ul className="list-dist">
-            {moviesData.movies.map((movie) => (
-              <li key={movie._id} className="underline">
-                {movie.name}
-              </li>
-            ))}
-          </ul>
+          {moviesData.movies.length === 0 ? (
+            <p>This category doesn&apos;t have any movies yet</p>
+          ) : (
+            <ul className="list-dist">
+              {moviesData.movies.map((movie) => (
+                <li key={movie._id} className="underline">
+                  <Link to={`/movies/${movie._id}`}>{movie.name}</Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
     </div>

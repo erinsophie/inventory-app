@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
+ 
+  // fetch all movies upon component mount
   useEffect(() => {
     async function fetchMovie() {
       try {
@@ -31,16 +33,43 @@ function MovieDetails() {
 
   if (error) return <p>Error: {error.message}</p>;
 
+  // delete movie
+  async function handleDelete() {
+    try {
+      const response = await fetch(`http://localhost:8080/api/movies/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      navigate("/movies");
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">
+    <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col">
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div>
+        <div className="flex flex-col gap-3">
           <p className="text-2xl">{movie.name}</p>
           <p>Price: £{movie.price}</p>
-          <p>Catgeory: {movie.category}</p>
+          <p>Catgeory: {movie.category.name}</p>
           <p>Number in stock: {movie.numberInStock}</p>
+
+          <button
+            onClick={() => handleDelete()}
+            className="bg-yellow-400 text-black w-32"
+          >
+            Delete movie
+          </button>
         </div>
       )}
     </div>

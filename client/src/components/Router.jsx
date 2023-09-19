@@ -6,6 +6,7 @@ import Categories from "../pages/Categories";
 import MovieDetails from "../pages/MovieDetails";
 import CategoryDetails from "../pages/CategoryDetails";
 import MovieForm from "../pages/MovieForm";
+import CategoryForm from '../pages/CategoryForm'
 
 function Router() {
   const router = createBrowserRouter([
@@ -36,6 +37,10 @@ function Router() {
         {
           path: "/categories/:id",
           element: <CategoryDetails />,
+        },
+        {
+          path: "/add-category",
+          element: <CategoryForm />,
         },
       ],
     },

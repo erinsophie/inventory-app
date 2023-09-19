@@ -31,3 +31,13 @@ exports.readCategory = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.addCategory = async (req, res) => {
+  try {
+    const category = new Category(req.body);
+    await category.save();
+    res.status(201).json(category);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}

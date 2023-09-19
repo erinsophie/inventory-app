@@ -9,7 +9,7 @@ const movieSchema = new mongoose.Schema({
 });
 
 movieSchema.virtual("url").get(function () {
-  return `api/movies/${this._id}`;
+  return `/api/movies/${this._id}`;
 });
 
 module.exports = mongoose.model("Movie", movieSchema);

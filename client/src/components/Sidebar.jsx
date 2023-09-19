@@ -11,6 +11,7 @@ function Sidebar() {
 
       <div className="flex flex-col">
         <Link to="/add-movie">Add new movie</Link>
+        <Link to="/add-category">Add new category</Link>
       </div>
     </div>
   );
