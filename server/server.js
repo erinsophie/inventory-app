@@ -18,8 +18,8 @@ app.use(cors());
 app.use(express.json());
 
 // define route handlers
-app.use("/movies", movieRoutes);
-app.use("/categories", categoryRoutes);
+app.use("/api/movies", movieRoutes);
+app.use("/api/categories", categoryRoutes);
 
 const PORT = process.env.PORT || 8080;
 

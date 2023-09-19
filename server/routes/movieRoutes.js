@@ -4,7 +4,7 @@ const movieController = require("../controllers/movieController");
 
 router.get("/", movieController.getMovies);
 //router.post("/", addMovie);
-//router.get("/:id", readMovie);
+router.get("/:id", movieController.readMovie);
 //router.put("/:id", updateMovie);
 //router.delete("/:id", deleteMovie);
 
