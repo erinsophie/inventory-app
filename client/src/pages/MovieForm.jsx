@@ -108,6 +108,15 @@ function MovieForm() {
   if (error)
     return <p className="text-xl text-yellow-400">{`Error: ${error}`}</p>;
 
+  //update form
+  function handleChange(event) {
+    const { id, value } = event.target;
+    setNewMovie((prevMovie) => ({
+      ...prevMovie,
+      [id]: value,
+    }));
+  }
+
   return (
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">
       <h1 className="text-2xl">Input details for movie</h1>
@@ -126,9 +135,7 @@ function MovieForm() {
             id="name"
             type="text"
             value={newMovie.name}
-            onChange={(e) => {
-              setNewMovie({ ...newMovie, name: e.target.value });
-            }}
+            onChange={handleChange}
             className="bg-transparent border border-yellow-400"
           />
 
@@ -139,9 +146,7 @@ function MovieForm() {
             id="price"
             type="number"
             value={newMovie.price}
-            onChange={(e) => {
-              setNewMovie({ ...newMovie, price: e.target.value });
-            }}
+            onChange={handleChange}
             className="bg-transparent border border-yellow-400"
           />
 
@@ -151,9 +156,7 @@ function MovieForm() {
           <select
             id="category"
             value={newMovie.category}
-            onChange={(e) => {
-              setNewMovie({ ...newMovie, category: e.target.value });
-            }}
+            onChange={handleChange}
             className="bg-transparent border border-yellow-400 p-1"
           >
             <option defaultValue={''}></option>
@@ -164,16 +167,14 @@ function MovieForm() {
             ))}
           </select>
 
-          <label htmlFor="stock" className="pr-3">
+          <label htmlFor="numberInStock" className="pr-3">
             Number in stock:
           </label>
           <input
-            id="stock"
+            id="numberInStock"
             type="number"
             value={newMovie.numberInStock}
-            onChange={(e) => {
-              setNewMovie({ ...newMovie, numberInStock: e.target.value });
-            }}
+            onChange={handleChange}
             className="bg-transparent border border-yellow-400"
           />
 

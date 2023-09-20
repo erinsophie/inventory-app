@@ -69,6 +69,17 @@ function CategoryForm() {
   if (error)
     return <p className="text-xl text-yellow-400">{`Error: ${error}`}</p>;
 
+  // update form
+  function handleChange(event) {
+    const { id, value } = event.target;
+    setNewCategory((prevCategory) => ({
+      ...prevCategory,
+      [id]: value,
+    }));
+  }
+
+  
+
   return (
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">
       <h1 className="text-2xl">Input details for category</h1>
@@ -87,9 +98,7 @@ function CategoryForm() {
             id="name"
             type="text"
             value={newCategory.name}
-            onChange={(e) => {
-              setNewCategory({ name: e.target.value });
-            }}
+            onChange={handleChange}
             className="bg-transparent border border-yellow-400"
           />
 
