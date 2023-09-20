@@ -23,11 +23,13 @@ function MovieForm() {
     });
   }
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   // fetch all categories
   useEffect(() => {
     async function getCategories() {
       try {
-        let response = await fetch("http://localhost:8080/api/categories");
+        let response = await fetch(`${API_BASE_URL}/api/categories`);
 
         if (!response.ok) {
           throw new Error("Network response was not ok " + response.statusText);
@@ -57,9 +59,7 @@ function MovieForm() {
     async function fetchMovie() {
       if (id) {
         try {
-          const response = await fetch(
-            `http://localhost:8080/api/movies/${id}`
-          );
+          const response = await fetch(`${API_BASE_URL}/api/movies/${id}`);
 
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -84,8 +84,8 @@ function MovieForm() {
     e.preventDefault();
     try {
       const url = id
-        ? `http://localhost:8080/api/movies/${id}`
-        : "http://localhost:8080/api/movies";
+        ? `${API_BASE_URL}/api/movies/${id}`
+        : `${API_BASE_URL}/api/movies`;
       const method = id ? "PUT" : "POST";
 
       const response = await fetch(url, {

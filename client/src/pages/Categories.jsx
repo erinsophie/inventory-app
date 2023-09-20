@@ -6,11 +6,13 @@ function Categories() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     // fetch all categories
     async function getCategories() {
       try {
-        let response = await fetch("http://localhost:8080/api/categories");
+        let response = await fetch(`${API_BASE_URL}/api/categories`);
 
         if (!response.ok) {
           throw new Error("Network response was not ok " + response.statusText);
@@ -29,7 +31,8 @@ function Categories() {
     getCategories();
   }, []);
 
-  if (error) return <p className='text-xl text-yellow-400'>{`Error: ${error}`}</p>
+  if (error)
+    return <p className="text-xl text-yellow-400">{`Error: ${error}`}</p>;
 
   return (
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">

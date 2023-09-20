@@ -8,16 +8,14 @@ function CategoryForm() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  console.log(newCategory);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   // get category name if id is provided
   useEffect(() => {
     async function fetchCategory() {
       if (id) {
         try {
-          const response = await fetch(
-            `http://localhost:8080/api/categories/${id}`
-          );
+          const response = await fetch(`${API_BASE_URL}/api/categories/${id}`);
 
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -42,8 +40,8 @@ function CategoryForm() {
     e.preventDefault();
     try {
       const url = id
-        ? `http://localhost:8080/api/categories/${id}`
-        : "http://localhost:8080/api/categories";
+        ? `${API_BASE_URL}/api/categories/${id}`
+        : `${API_BASE_URL}/api/categories`;
       const method = id ? "PUT" : "POST";
 
       const response = await fetch(url, {

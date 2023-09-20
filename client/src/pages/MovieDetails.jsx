@@ -8,11 +8,13 @@ function MovieDetails() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   // fetch movie upon component mount
   useEffect(() => {
     async function fetchMovie() {
       try {
-        const response = await fetch(`http://localhost:8080/api/movies/${id}`);
+        const response = await fetch(`${API_BASE_URL}/api/movies/${id}`);
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -34,7 +36,7 @@ function MovieDetails() {
   // delete movie
   async function handleDelete() {
     try {
-      const response = await fetch(`http://localhost:8080/api/movies/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/movies/${id}`, {
         method: "DELETE",
       });
 

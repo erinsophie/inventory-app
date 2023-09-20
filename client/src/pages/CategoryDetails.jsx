@@ -8,13 +8,13 @@ function CategoryDetails() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   // fetch all movies that belong to that category
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/categories/${id}`
-        );
+        const response = await fetch(`${API_BASE_URL}/api/categories/${id}`);
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -36,12 +36,9 @@ function CategoryDetails() {
   async function deleteCategory() {
     try {
       setLoading(true);
-      const response = await fetch(
-        `http://localhost:8080/api/categories/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/api/categories/${id}`, {
+        method: "DELETE",
+      });
 
       if (!response.ok) {
         const errorMsg = await response.json();

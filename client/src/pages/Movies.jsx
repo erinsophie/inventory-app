@@ -6,11 +6,13 @@ function Movies() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     // fetch all movies
     async function getMovies() {
       try {
-        let response = await fetch("http://localhost:8080/api/movies");
+        let response = await fetch(`${API_BASE_URL}/api/movies`);
 
         if (!response.ok) {
           throw new Error("Network response was not ok " + response.statusText);
