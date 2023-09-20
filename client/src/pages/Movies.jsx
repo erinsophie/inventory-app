@@ -38,12 +38,11 @@ function Movies() {
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">
       <h1 className="text-2xl">All movies</h1>
       <p>A-Z</p>
+      <p>{movies.length === 0 ? 'No movies' : `${movies.length} movies`}</p>
 
       <div className="flex flex-col gap-5">
         {loading ? (
           <p>Loading...</p>
-        ) : movies.length === 0 ? (
-          <p>No movies</p>
         ) : (
           <ul className="list-dist">
             {movies.map((movie) => (

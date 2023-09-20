@@ -24,6 +24,7 @@ function MovieForm() {
   }
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  console.log(newMovie);
 
   // fetch all categories
   useEffect(() => {
@@ -36,12 +37,6 @@ function MovieForm() {
         }
         let data = await response.json();
         setCategories(data);
-        // populate category with default category to avoid errors
-        setNewMovie((prevMovie) => ({
-          ...prevMovie,
-          category: data[0]._id,
-        }));
-
         setError(null);
       } catch (error) {
         setError(error.message);
@@ -161,6 +156,7 @@ function MovieForm() {
             }}
             className="bg-transparent border border-yellow-400 p-1"
           >
+            <option defaultValue={''}></option>
             {categories.map((category) => (
               <option key={category._id} value={category._id}>
                 {category.name}
