@@ -78,7 +78,7 @@ function CategoryDetails() {
           )}
           <div className="flex gap-5">
             <button
-              onClick={() => deleteCategory()}
+              onClick={deleteCategory}
               className="bg-yellow-400 text-black w-40"
             >
               Delete category

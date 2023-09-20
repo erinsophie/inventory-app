@@ -69,7 +69,7 @@ function MovieDetails() {
 
           <div className="flex gap-5">
             <button
-              onClick={() => handleDelete()}
+              onClick={handleDelete}
               className="bg-yellow-400 text-black w-32"
             >
               Delete movie
