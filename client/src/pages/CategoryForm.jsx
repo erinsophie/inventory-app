@@ -1,19 +1,53 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 function CategoryForm() {
+  const { id } = useParams();
   const [newCategory, setNewCategory] = useState({ name: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // add new category
+  console.log(newCategory);
+
+  // get category name if id is provided
+  useEffect(() => {
+    async function fetchCategory() {
+      if (id) {
+        try {
+          const response = await fetch(
+            `http://localhost:8080/api/categories/${id}`
+          );
+
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          setNewCategory({ name: data.category });
+          setError(null);
+        } catch (error) {
+          setError(error.message);
+          setNewCategory({ name: "" });
+        } finally {
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchCategory();
+  }, [id]);
+
+  // add new category or update existing one
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      setLoading(true);
-      const response = await fetch("http://localhost:8080/api/categories", {
-        method: "POST",
+      const url = id
+        ? `http://localhost:8080/api/categories/${id}`
+        : "http://localhost:8080/api/categories";
+      const method = id ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -24,11 +58,11 @@ function CategoryForm() {
         throw new Error("Network response was not ok " + response.statusText);
       }
       navigate("/categories");
-      setNewCategory("");
+      setNewCategory({ name: "" });
       setError(null);
     } catch (error) {
       setError(error.message);
-      setNewCategory("");
+      setNewCategory({ name: "" });
     } finally {
       setLoading(false);
     }
@@ -39,7 +73,7 @@ function CategoryForm() {
 
   return (
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">
-      <h1 className="text-2xl">Input details for new category</h1>
+      <h1 className="text-2xl">Input details for category</h1>
 
       {loading ? (
         <p>Loading...</p>
@@ -61,8 +95,8 @@ function CategoryForm() {
             className="bg-transparent border border-yellow-400"
           />
 
-          <button type="submit" className="p-2 bg-yellow-400 text-black w-32">
-            Add category
+          <button type="submit" className="p-2 bg-yellow-400 text-black w-40">
+            {id ? "Update category" : "Add category"}
           </button>
         </form>
       )}

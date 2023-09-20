@@ -8,6 +8,7 @@ function CategoryDetails() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // fetch all movies that belong to that category
   useEffect(() => {
     async function fetchMovies() {
       try {
@@ -56,8 +57,9 @@ function CategoryDetails() {
     }
   }
 
-  if (error) return <p className='text-xl text-yellow-400'>{`Error: ${error}`}</p>
-  
+  if (error)
+    return <p className="text-xl text-yellow-400">{`Error: ${error}`}</p>;
+
   return (
     <div>
       {loading ? (
@@ -77,12 +79,20 @@ function CategoryDetails() {
               ))}
             </ul>
           )}
-          <button
-            onClick={() => deleteCategory()}
-            className="bg-yellow-400 text-black w-32"
-          >
-            Delete category
-          </button>
+          <div className="flex gap-5">
+            <button
+              onClick={() => deleteCategory()}
+              className="bg-yellow-400 text-black w-40"
+            >
+              Delete category
+            </button>
+            <button
+              onClick={() => navigate(`/edit-category/${id}`)}
+              className="bg-yellow-400 text-black w-40"
+            >
+              Update category
+            </button>
+          </div>
         </div>
       )}
     </div>

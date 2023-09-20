@@ -8,7 +8,7 @@ function MovieDetails() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // fetch all movies upon component mount
+  // fetch movie upon component mount
   useEffect(() => {
     async function fetchMovie() {
       try {

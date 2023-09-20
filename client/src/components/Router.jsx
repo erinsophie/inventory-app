@@ -47,6 +47,10 @@ function Router() {
           path: "/add-category",
           element: <CategoryForm />,
         },
+        {
+          path: "/edit-category/:id",
+          element: <CategoryForm />,
+        },
       ],
       errorElement: <Error />,
     },

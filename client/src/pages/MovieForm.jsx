@@ -115,7 +115,7 @@ function MovieForm() {
 
   return (
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">
-      <h1 className="text-2xl">Input details for new movie</h1>
+      <h1 className="text-2xl">Input details for movie</h1>
 
       {loading ? (
         <p>Loading...</p>
