@@ -42,6 +42,8 @@ function Categories() {
       <div className="flex flex-col gap-5">
         {loading ? (
           <p>Loading...</p>
+        ) : categories.length === 0 ? (
+          <p>No categories</p>
         ) : (
           <ul className="list-dist">
             {categories.map((category) => (

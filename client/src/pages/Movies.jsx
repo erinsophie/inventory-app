@@ -42,6 +42,8 @@ function Movies() {
       <div className="flex flex-col gap-5">
         {loading ? (
           <p>Loading...</p>
+        ) : movies.length === 0 ? (
+          <p>No movies</p>
         ) : (
           <ul className="list-dist">
             {movies.map((movie) => (
