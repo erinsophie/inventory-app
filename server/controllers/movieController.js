@@ -1,10 +1,10 @@
-const Movie = require("../models/movie");
+const Movie = require('../models/movie');
 
 // get all movies
 exports.getMovies = async (req, res) => {
   try {
     const movies = await Movie.find()
-      .populate("category")
+      .populate('category')
       .sort({ name: 1 })
       .exec();
     res.json(movies);
@@ -17,10 +17,10 @@ exports.readMovie = async (req, res) => {
   try {
     // replace category field (id) with actual category document
     const movie = await Movie.findById(req.params.id)
-      .populate("category")
+      .populate('category')
       .exec();
     if (!movie) {
-      return res.status(404).json({ message: "Movie not found" });
+      return res.status(404).json({ message: 'Movie not found' });
     }
     res.json(movie);
   } catch (error) {
@@ -42,7 +42,7 @@ exports.deleteMovie = async (req, res) => {
   try {
     const movie = await Movie.findByIdAndRemove(req.params.id);
     if (!movie) {
-      return res.status(404).json({ message: "Movie not found" });
+      return res.status(404).json({ message: 'Movie not found' });
     }
     res.status(200).json(movie);
   } catch (error) {
@@ -57,7 +57,7 @@ exports.updateMovie = async (req, res) => {
       runValidators: true,
     });
     if (!movie) {
-      return res.status(404).json({ message: "Movie not found" });
+      return res.status(404).json({ message: 'Movie not found' });
     }
     res.status(200).json(movie);
   } catch (error) {

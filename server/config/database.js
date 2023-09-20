@@ -1,6 +1,9 @@
-const mongoose = require("mongoose");
-const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
-require("dotenv").config({path: envFile});
+const mongoose = require('mongoose');
+const envFile =
+  process.env.NODE_ENV === 'production'
+    ? '.env.production'
+    : '.env.development';
+require('dotenv').config({ path: envFile });
 
 const dbURI = process.env.DATABASE_URI;
 
@@ -11,7 +14,7 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("Database connected");
+    console.log('Database connected');
   } catch (err) {
     console.error(`Error connecting to database: ${err}`);
     process.exit(1);

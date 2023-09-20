@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function MovieForm() {
   const { id } = useParams();
@@ -8,18 +8,18 @@ function MovieForm() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [newMovie, setNewMovie] = useState({
-    name: "",
-    price: "",
-    category: "",
-    numberInStock: "",
+    name: '',
+    price: '',
+    category: '',
+    numberInStock: '',
   });
 
   function resetForm() {
     setNewMovie({
-      name: "",
-      price: "",
-      category: "",
-      numberInStock: "",
+      name: '',
+      price: '',
+      category: '',
+      numberInStock: '',
     });
   }
 
@@ -32,7 +32,7 @@ function MovieForm() {
         let response = await fetch(`${API_BASE_URL}/api/categories`);
 
         if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
+          throw new Error('Network response was not ok ' + response.statusText);
         }
         let data = await response.json();
         setCategories(data);
@@ -62,7 +62,7 @@ function MovieForm() {
           const response = await fetch(`${API_BASE_URL}/api/movies/${id}`);
 
           if (!response.ok) {
-            throw new Error("Network response was not ok");
+            throw new Error('Network response was not ok');
           }
           const data = await response.json();
           setNewMovie(data);
@@ -86,20 +86,20 @@ function MovieForm() {
       const url = id
         ? `${API_BASE_URL}/api/movies/${id}`
         : `${API_BASE_URL}/api/movies`;
-      const method = id ? "PUT" : "POST";
+      const method = id ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
         method: method,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(newMovie),
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok " + response.statusText);
+        throw new Error('Network response was not ok ' + response.statusText);
       }
-      navigate("/movies");
+      navigate('/movies');
       resetForm();
       setError(null);
     } catch (error) {
@@ -182,7 +182,7 @@ function MovieForm() {
           />
 
           <button type="submit" className="p-2 bg-yellow-400 text-black w-32">
-            {id ? "Update movie" : "Add movie"}
+            {id ? 'Update movie' : 'Add movie'}
           </button>
         </form>
       )}

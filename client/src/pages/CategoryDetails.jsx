@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 function CategoryDetails() {
   const { id } = useParams();
@@ -17,7 +17,7 @@ function CategoryDetails() {
         const response = await fetch(`${API_BASE_URL}/api/categories/${id}`);
 
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
         setMoviesData(data);
@@ -37,7 +37,7 @@ function CategoryDetails() {
     try {
       setLoading(true);
       const response = await fetch(`${API_BASE_URL}/api/categories/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
 
       if (!response.ok) {
@@ -45,7 +45,7 @@ function CategoryDetails() {
         throw new Error(errorMsg.message);
       }
 
-      navigate("/categories");
+      navigate('/categories');
       setError(null);
     } catch (error) {
       setError(error.message);

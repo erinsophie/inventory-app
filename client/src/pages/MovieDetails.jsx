@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function MovieDetails() {
   const { id } = useParams();
@@ -17,7 +17,7 @@ function MovieDetails() {
         const response = await fetch(`${API_BASE_URL}/api/movies/${id}`);
 
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
         setMovie(data);
@@ -37,14 +37,14 @@ function MovieDetails() {
   async function handleDelete() {
     try {
       const response = await fetch(`${API_BASE_URL}/api/movies/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       }
 
-      navigate("/movies");
+      navigate('/movies');
       setError(null);
     } catch (error) {
       setError(error.message);

@@ -1,5 +1,5 @@
-const Category = require("../models/category");
-const Movie = require("../models/movie");
+const Category = require('../models/category');
+const Movie = require('../models/movie');
 
 // get all categories
 exports.getCategories = async (req, res) => {
@@ -19,7 +19,7 @@ exports.readCategory = async (req, res) => {
       Movie.find({ category: req.params.id }).sort({ name: 1 }).exec(),
     ]);
     if (!category) {
-      return res.status(404).json({ message: "Category not found" });
+      return res.status(404).json({ message: 'Category not found' });
     }
     res.json({
       movies: moviesInCategory,
@@ -44,7 +44,7 @@ exports.deleteCategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id).exec();
     if (!category) {
-      return res.status(404).json({ message: "Category not found" });
+      return res.status(404).json({ message: 'Category not found' });
     }
     const moviesInCategory = await Movie.find({
       category: req.params.id,
@@ -53,11 +53,11 @@ exports.deleteCategory = async (req, res) => {
     // if there is no movies in this category, delete category
     if (moviesInCategory.length === 0) {
       await Category.findByIdAndRemove(req.params.id);
-      return res.status(200).json({ message: "Category has been deleted" });
+      return res.status(200).json({ message: 'Category has been deleted' });
     } else {
       return res
         .status(400)
-        .json({ message: "Category still has movies. Cannot delete" });
+        .json({ message: 'Category still has movies. Cannot delete' });
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -72,7 +72,7 @@ exports.updateCategory = async (req, res) => {
     });
 
     if (!category) {
-      return res.status(404).json({ message: "Category not found" });
+      return res.status(404).json({ message: 'Category not found' });
     }
 
     res.status(200).json(category);

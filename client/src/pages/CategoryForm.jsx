@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function CategoryForm() {
   const { id } = useParams();
-  const [newCategory, setNewCategory] = useState({ name: "" });
+  const [newCategory, setNewCategory] = useState({ name: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -18,14 +18,14 @@ function CategoryForm() {
           const response = await fetch(`${API_BASE_URL}/api/categories/${id}`);
 
           if (!response.ok) {
-            throw new Error("Network response was not ok");
+            throw new Error('Network response was not ok');
           }
           const data = await response.json();
           setNewCategory({ name: data.category });
           setError(null);
         } catch (error) {
           setError(error.message);
-          setNewCategory({ name: "" });
+          setNewCategory({ name: '' });
         } finally {
           setLoading(false);
         }
@@ -42,25 +42,25 @@ function CategoryForm() {
       const url = id
         ? `${API_BASE_URL}/api/categories/${id}`
         : `${API_BASE_URL}/api/categories`;
-      const method = id ? "PUT" : "POST";
+      const method = id ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
         method: method,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(newCategory),
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok " + response.statusText);
+        throw new Error('Network response was not ok ' + response.statusText);
       }
-      navigate("/categories");
-      setNewCategory({ name: "" });
+      navigate('/categories');
+      setNewCategory({ name: '' });
       setError(null);
     } catch (error) {
       setError(error.message);
-      setNewCategory({ name: "" });
+      setNewCategory({ name: '' });
     } finally {
       setLoading(false);
     }
@@ -94,7 +94,7 @@ function CategoryForm() {
           />
 
           <button type="submit" className="p-2 bg-yellow-400 text-black w-40">
-            {id ? "Update category" : "Add category"}
+            {id ? 'Update category' : 'Add category'}
           </button>
         </form>
       )}

@@ -1,18 +1,18 @@
-const express = require("express");
-const cors = require("cors");
-const connectDB = require("./config/database");
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/database');
 const envFile =
-  process.env.NODE_ENV === "production"
-    ? ".env.production"
-    : ".env.development";
-require("dotenv").config({ path: envFile });
+  process.env.NODE_ENV === 'production'
+    ? '.env.production'
+    : '.env.development';
+require('dotenv').config({ path: envFile });
 
 // connect to database
 connectDB();
 
 // route handlers
-const movieRoutes = require("./routes/movieRoutes");
-const categoryRoutes = require("./routes/categoryRoutes");
+const movieRoutes = require('./routes/movieRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 // start express server
 const app = express();
@@ -25,8 +25,8 @@ app.use(cors({ origin: currentOrigin }));
 app.use(express.json());
 
 // define route handlers
-app.use("/api/movies", movieRoutes);
-app.use("/api/categories", categoryRoutes);
+app.use('/api/movies', movieRoutes);
+app.use('/api/categories', categoryRoutes);
 
 const PORT = process.env.PORT || 8080;
 

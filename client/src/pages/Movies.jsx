@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Movies() {
   const [movies, setMovies] = useState([]);
@@ -15,7 +15,7 @@ function Movies() {
         let response = await fetch(`${API_BASE_URL}/api/movies`);
 
         if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
+          throw new Error('Network response was not ok ' + response.statusText);
         }
         let data = await response.json();
         setMovies(data);
