@@ -38,6 +38,11 @@ function Categories() {
     <div className="flex-1 text-yellow-400 text-lg p-10 flex flex-col gap-3">
       <h1 className="text-2xl">All categories</h1>
       <p>A-Z</p>
+      <p>
+        {categories.length === 0
+          ? 'No categories'
+          : `${categories.length} categories`}
+      </p>
 
       <div className="flex flex-col gap-5">
         {loading ? (
