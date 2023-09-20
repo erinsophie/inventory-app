@@ -18,11 +18,9 @@ exports.readCategory = async (req, res) => {
       Category.findById(req.params.id).exec(),
       Movie.find({ category: req.params.id }).sort({ name: 1 }).exec(),
     ]);
-
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
-
     res.json({
       movies: moviesInCategory,
       category: category.name,
@@ -45,11 +43,9 @@ exports.addCategory = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id).exec();
-
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
-
     const moviesInCategory = await Movie.find({
       category: req.params.id,
     }).exec();

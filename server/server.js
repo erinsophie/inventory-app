@@ -1,6 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/database");
+const envFile =
+  process.env.NODE_ENV === "production"
+    ? ".env.production"
+    : ".env.development";
+require("dotenv").config({ path: envFile });
 
 // connect to database
 connectDB();
@@ -12,8 +17,10 @@ const categoryRoutes = require("./routes/categoryRoutes");
 // start express server
 const app = express();
 
+const currentOrigin = process.env.CORS_ORIGIN;
+
 // middlewares
-app.use(cors());
+app.use(cors({ origin: currentOrigin }));
 // parses JSON into an object before it reaches the controllers so its properties can be accessed
 app.use(express.json());
 

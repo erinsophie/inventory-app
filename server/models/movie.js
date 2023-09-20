@@ -8,8 +8,4 @@ const movieSchema = new mongoose.Schema({
   numberInStock: { type: Number, required: true },
 });
 
-movieSchema.virtual("url").get(function () {
-  return `/api/movies/${this._id}`;
-});
-
 module.exports = mongoose.model("Movie", movieSchema);

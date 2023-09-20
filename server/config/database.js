@@ -1,7 +1,8 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
+require("dotenv").config({path: envFile});
 
-const dbURI = process.env.CONNECTION_STR;
+const dbURI = process.env.DATABASE_URI;
 
 // connect to database
 const connectDB = async () => {
